@@ -1,0 +1,59 @@
+<html>
+    <body>
+        <div class="new-player" style="width: 300px; padding: 20px">
+            <div>
+                <textarea id="new-player" placeholder="Youtube Embed code" style="width: 300px; height: 150px;"></textarea>
+            </div>
+            <div>
+                <button onclick="addnewvideo();">Add Video</button>
+            </div>
+        </div>
+        <div id="player-wall" class="player-wall" style="display: flex; flex-direction: row; flex-wrap: wrap;">
+            <div id="player-1" class="player-container" style="padding: 20px;">
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/OAuAn5rRESs" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <div id="player-2" class="player-container" style="padding: 20px;">
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/WqzXzLY326U" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        </div>
+        <div>
+            <span>Current Players: </span><input disabled readonly id="current-player-count" value="2"/>
+        </div>
+    </body>
+    
+<script>
+    function addnewvideo() {
+        console.log('We will now try to add the new video to the wall');
+
+        // Get the current number of players
+        var currentplayers = (document.getElementById("current-player-count").value);
+
+        // Get the new video embed code
+        var newvideo = (document.getElementById("new-player").value);
+        
+        // Here we will get our current video wall
+        var currentvideowall = (document.getElementById("player-wall").innerHTML);
+
+        // we want to keep a count of the videos
+        currentplayers++;
+
+        // Add our new video to the wall
+        var newvideocontainer = '<div id=\"player-' + currentplayers + '\" class=\"player-container\" style=\"padding: 20px;\">' +
+                                newvideo +
+                                '</div>';
+
+        // Attach our new player to the full wall
+        currentvideowall += newvideocontainer;
+
+        // Update our counter to know we have a new video
+        (document.getElementById("current-player-count").value) = currentplayers;
+
+        // Render will take our new video wall and replace the current wall with all the videos.
+        render(currentvideowall, document.getElementById("player-wall"));
+    }
+
+    var render = function (template, node) {
+        node.innerHTML = template;
+    };
+</script>
+</html> 
